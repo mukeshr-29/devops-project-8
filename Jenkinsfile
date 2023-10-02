@@ -8,5 +8,11 @@ node {
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165'
             sh 'scp /var/lib/jenkins/workspace/project-8/Dockerfile ubuntu@10.0.0.165:/home/ubuntu'
         }
+    stage("build the image"){
+        sshagent(['ansible']){
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 cd /home/ubuntu/'
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker build -t $JOB_NAME:v1.$BUILD_ID .'
+        }
+        }
     }
 }
