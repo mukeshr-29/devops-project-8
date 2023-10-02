@@ -39,5 +39,11 @@ node {
 
             }
         }
+        stage("kube deployment using ansible"){
+            sshagent(['ansible']){
+                sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 cd /home/ubuntu/'
+                sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 ansible-playbook ansible.yaml'
+            }
+        }
     }
 }
