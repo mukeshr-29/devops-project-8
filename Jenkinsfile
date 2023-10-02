@@ -12,7 +12,16 @@ node {
         sshagent(['ansible']){
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 cd /home/ubuntu/'
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image build -t $JOB_NAME:v1.$BUILD_ID .'
+            }
         }
+    stage("docker image tagging"){
+        sshagent(['ansible']){
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 cd /home/ubuntu/'
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image tag $JOB_NAME:v1.$BUILD_ID mukeshr29/$JOB_NAME:v1.$BUILD_ID'
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image tag $JOB_NAME:v1.$BUILD_ID mukeshr29/$JOB_NAME:latest'
+            
+            }
         }
+
     }
 }
