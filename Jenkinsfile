@@ -6,7 +6,7 @@ node {
     stage("copy docker file to ansible server"){
         sshagent(['ansible']){
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165'
-            sh 'scp /var/lib/jenkins/workspace/project-8/Dockerfile ubuntu@10.0.0.165:/home/ubuntu'
+            sh 'scp /var/lib/jenkins/workspace/project-8/Dockerfile ansible.yaml ubuntu@10.0.0.165:/home/ubuntu'
         }
     stage("build the image"){
         sshagent(['ansible']){
