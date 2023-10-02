@@ -31,5 +31,12 @@ node {
             }
 
         }
+        stage("copy files from ansible to kubernetes"){
+            sshagent(['kubernetes']){
+                sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.15'
+                sh 'scp /var/lib/jenkins/workspace/project-8/Dockerfile ubuntu@10.0.0.15:/home/ubuntu'
+                
+            }
+        }
     }
 }
