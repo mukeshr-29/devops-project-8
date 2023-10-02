@@ -27,6 +27,7 @@ node {
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker login -u mukeshr29 -p ${dockerhub}'
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image push mukeshr29/$JOB_NAME:v1.$BUILD_ID'
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image push mukeshr29/$JOB_NAME:latest'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker system prune'
                 }
             }
 
@@ -35,7 +36,7 @@ node {
             sshagent(['kubernetes']){
                 sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.15'
                 sh 'scp /var/lib/jenkins/workspace/project-8/Dockerfile ubuntu@10.0.0.15:/home/ubuntu'
-                
+
             }
         }
     }
