@@ -19,9 +19,17 @@ node {
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 cd /home/ubuntu/'
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image tag $JOB_NAME:v1.$BUILD_ID mukeshr29/$JOB_NAME:v1.$BUILD_ID'
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image tag $JOB_NAME:v1.$BUILD_ID mukeshr29/$JOB_NAME:latest'
-            
             }
         }
+        stage("push image to dockerhub"){
+            sshagent(['ansible']){
+                withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]){
+                    sh 'docker login -u mukeshr29 -p ${dockerhub}'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image push mukeshr29/$JOB_NAME:v1.$BUILD_ID'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image push mukeshr29/$JOB_NAME:latest'
+                }
+            }
 
+        }
     }
 }
