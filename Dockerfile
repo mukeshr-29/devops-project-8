@@ -9,8 +9,10 @@ RUN unzip healet.zip
 RUN mv healet-html/* .
 RUN rm -rf healet-html healet.zip
 
-# Add this line to create a valid runtime directory for Apache
-RUN mkdir -p /var/run/apache2
+# Create a custom Apache configuration file
+RUN echo "Define APACHE_RUN_DIR /var/run/apache2" >> /etc/apache2/apache2.conf
+RUN echo "Define APACHE_RUN_USER www-data" >> /etc/apache2/apache2.conf
+RUN echo "Define APACHE_RUN_GROUP www-data" >> /etc/apache2/apache2.conf
 
 CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
 EXPOSE 80
