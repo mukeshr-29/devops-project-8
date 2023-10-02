@@ -1,6 +1,9 @@
 FROM centos:latest
 MAINTAINER mukeshr29@gmail.com
 
+# Create a new CentOS-Base.repo file
+RUN echo -e "[base]\nname=CentOS-\$releasever - Base\nbaseurl=http://mirror.centos.org/centos/\$releasever/os/\$basearch/\ngpgcheck=1\ngpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7" > /etc/yum.repos.d/CentOS-Base.repo
+
 # Use a specific mirror for CentOS repositories
 RUN sed -i 's/^mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Base.repo && \
     sed -i 's/^#baseurl/baseurl/g' /etc/yum.repos.d/CentOS-Base.repo && \
