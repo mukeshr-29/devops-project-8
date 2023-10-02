@@ -11,7 +11,7 @@ node {
     stage("build the image"){
         sshagent(['ansible']){
             sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 cd /home/ubuntu/'
-            sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker build -t $JOB_NAME:v1.$BUILD_ID .'
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.0.165 docker image build -t $JOB_NAME:v1.$BUILD_ID .'
         }
         }
     }
