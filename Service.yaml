@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: project-8
+  labels:
+    app: project-8
+spec:
+  selector:
+    app: project-8
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    targetPort: 80
+    nodePort: 31200
+
